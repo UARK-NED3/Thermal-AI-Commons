@@ -1,0 +1,27 @@
+{
+  "schema_version": "0.1.0",
+  "experiment_id": "synthetic-boiling-demo-001",
+  "evidence_class": "synthetic",
+  "modalities": [
+    {
+      "name": "optical",
+      "time_base": "camera_clock_s",
+      "units": "pixel",
+      "sampling_rate_hz": 1000,
+      "data_access": "public"
+    },
+    {
+      "name": "thermal",
+      "time_base": "daq_clock_s",
+      "units": "K",
+      "sampling_rate_hz": 100,
+      "data_access": "public"
+    }
+  ],
+  "synchronization": {"status": "illustrative_only", "reference_event": "synthetic_trigger"},
+  "rights": {
+    "owner": "NED3 synthetic demonstration",
+    "redistribution_permission": "yes",
+    "review_state": "approved"
+  }
+}

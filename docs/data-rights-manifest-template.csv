@@ -1,0 +1,2 @@
+artifact_id,artifact_type,owner,source_url_or_path,license_or_terms,access_class,publication_permission,redistribution_permission,training_permission,review_state,notes
+example-derived-output,derived_data,NED3,replace-with-approved-location,replace-with-approved-terms,private,pending,pending,pending,not_reviewed,Template only; do not treat as release approval.

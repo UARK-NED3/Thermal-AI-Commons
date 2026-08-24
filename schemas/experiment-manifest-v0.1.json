@@ -1,0 +1,43 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://github.com/UARK-NED3/Thermal-AI-Commons/schemas/experiment-manifest-v0.1.json",
+  "title": "Thermal AI Commons Experiment Manifest v0.1",
+  "description": "Metadata contract for a multimodal experiment. This manifest references data; it does not package raw data.",
+  "type": "object",
+  "required": ["schema_version", "experiment_id", "evidence_class", "modalities", "rights"],
+  "properties": {
+    "schema_version": {"const": "0.1.0"},
+    "experiment_id": {"type": "string", "minLength": 1},
+    "evidence_class": {"enum": ["measured", "simulated", "derived", "synthetic", "mixed"]},
+    "modalities": {
+      "type": "array",
+      "minItems": 1,
+      "items": {
+        "type": "object",
+        "required": ["name", "time_base", "units", "data_access"],
+        "properties": {
+          "name": {"enum": ["optical", "acoustic", "thermal", "electrical", "flow", "pressure", "simulation", "other"]},
+          "time_base": {"type": "string", "minLength": 1},
+          "units": {"type": "string", "minLength": 1},
+          "sampling_rate_hz": {"type": "number", "exclusiveMinimum": 0},
+          "data_access": {"enum": ["public", "controlled", "private", "not_released"]}
+        },
+        "additionalProperties": true
+      }
+    },
+    "synchronization": {"type": "object"},
+    "operating_conditions": {"type": "object"},
+    "calibration": {"type": "object"},
+    "uncertainty": {"type": "object"},
+    "rights": {
+      "type": "object",
+      "required": ["owner", "redistribution_permission", "review_state"],
+      "properties": {
+        "owner": {"type": "string", "minLength": 1},
+        "redistribution_permission": {"enum": ["yes", "no", "pending", "not_applicable"]},
+        "review_state": {"enum": ["not_reviewed", "in_review", "approved", "restricted"]}
+      }
+    }
+  },
+  "additionalProperties": true
+}
