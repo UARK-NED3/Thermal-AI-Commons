@@ -50,14 +50,25 @@ py -3.12 -m pytest
 
 Python 3.10 or later is required; the commands above use the supported Python
 3.12 interpreter available in the NED3 development environment. The package
-currently exposes only the schema version and does not download or process
-experimental data.
+does not download or process experimental data.
+
+Validate a manifest without changing its referenced data:
+
+```powershell
+py -3.12 -m thermal_ai_commons.cli validate examples/synthetic-experiment-manifest.json
+```
+
+Released component references are listed in
+[`components/registry-v0.1.json`](components/registry-v0.1.json). See the
+[component integration policy](docs/component-integration-policy.md) for the
+pinning and upgrade rules.
 
 ## Repository layout
 
 ```text
 src/thermal_ai_commons/  Minimal shared Python API
 schemas/                 Versioned machine-readable contracts
+components/              Pinned external component registry
 docs/                    Architecture, benchmark, and governance documents
 examples/                Safe synthetic/example manifests only
 tests/                   Contract smoke checks

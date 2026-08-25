@@ -1,0 +1,39 @@
+{
+  "registry_version": "0.1.0",
+  "purpose": "Immutable component references for Thermal AI Commons integration and reproducibility.",
+  "components": [
+    {
+      "id": "seqreg",
+      "repository": "https://github.com/cldunlap73/SeqReg",
+      "release_tag": "v0.1.0",
+      "commit": "a9e4eda2b1f8e31995d88dba77116ef593cf6ce2",
+      "package": "seqreg",
+      "package_version": "0.1.0",
+      "license": "Apache-2.0",
+      "role": "sequence-regression adapter target",
+      "commons_status": "eligible_for_adapter_development"
+    },
+    {
+      "id": "bubbleid",
+      "repository": "https://github.com/cldunlap73/BubbleID",
+      "release_tag": "V0.0.9",
+      "commit": "62116d9e4a5d9af5d4c56f6fbcc90b37e07d2982",
+      "package": "bubbleid",
+      "package_version": "0.0.9",
+      "license": "Apache-2.0",
+      "role": "optical segmentation and tracking adapter target",
+      "commons_status": "eligible_for_adapter_development"
+    },
+    {
+      "id": "bubbleid-flow",
+      "repository": "https://github.com/UARK-NED3/BubbleID-Flow",
+      "release_tag": "v0.1.0",
+      "commit": "f3cccc7d76e4ac8b24605c2efdc799711c4da1ee",
+      "package": "bubbleid-flow",
+      "package_version": "0.1.0",
+      "license": "not_declared",
+      "role": "flow-boiling optical-analysis adapter target",
+      "commons_status": "pinned_for_metadata_only_pending_license"
+    }
+  ]
+}

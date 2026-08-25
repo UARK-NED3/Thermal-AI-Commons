@@ -32,10 +32,16 @@ Traceable report and optional derived-data release
 - A future agent may orchestrate approved tools and summarize their outputs; it
   cannot substitute for calibration, validation, or engineering review.
 
-## Interfaces to implement next
+## Implemented in the current development version
 
-1. `ExperimentManifest` reader/validator for the v0.1 schema.
-2. Time-alignment interface that records reference clock, offset, and residual.
-3. Adapter protocol for BubbleID-Flow and SeqReg.
-4. Condition-group split generator.
-5. Report object with metrics, calibration, and inspected failure cases.
+1. `thermal-ai-commons validate` validates JSON experiment manifests against
+   the packaged v0.1 contract without changing the referenced data.
+2. The component registry pins released SeqReg, BubbleID, and BubbleID-Flow
+   versions with their rights status.
+
+## Next interfaces
+
+1. Time-alignment interface that records reference clock, offset, and residual.
+2. Adapter protocol for released SeqReg and BubbleID.
+3. Condition-group split generator.
+4. Report object with metrics, calibration, and inspected failure cases.

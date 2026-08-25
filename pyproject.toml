@@ -4,12 +4,13 @@ build-backend = "setuptools.build_meta"
 
 [project]
 name = "thermal-ai-commons"
-version = "0.1.0.dev0"
+version = "0.2.0.dev0"
 description = "Shared contracts and reproducibility utilities for NED3 Thermal AI Commons."
 readme = "README.md"
 requires-python = ">=3.10"
 license = "MIT"
 authors = [{ name = "NED3 Laboratory, University of Arkansas" }]
+dependencies = ["jsonschema>=4.18"]
 classifiers = [
   "Development Status :: 2 - Pre-Alpha",
   "Programming Language :: Python :: 3",
@@ -23,3 +24,9 @@ testpaths = ["tests"]
 
 [tool.setuptools.packages.find]
 where = ["src"]
+
+[tool.setuptools.package-data]
+thermal_ai_commons = ["_schemas/*.json"]
+
+[project.scripts]
+thermal-ai-commons = "thermal_ai_commons.cli:main"
