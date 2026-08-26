@@ -1,0 +1,12 @@
+{
+  "experiment_id": "synthetic-multimodal-demo-001",
+  "group_unit": "experiment_run",
+  "groups": [
+    "run-001",
+    "run-002",
+    "run-003",
+    "run-004",
+    "run-005",
+    "run-006"
+  ]
+}

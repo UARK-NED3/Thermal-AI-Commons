@@ -41,10 +41,11 @@ Traceable report and optional derived-data release
 3. `TimeAlignmentRecord` stores an explicit source-to-reference-clock mapping
    and residual timing metadata without inferring sensor alignment.
 4. The adapter contract distinguishes successful, abstained, and failed runs.
+5. The split generator creates immutable train/validation/test assignments by
+   declared independent group and rejects frame-, row-, and window-level groups.
 
 ## Next interfaces
 
-1. Condition-group split generator.
-2. Concrete adapters for released SeqReg and BubbleID using rights-cleared
+1. Concrete adapters for released SeqReg and BubbleID using rights-cleared
    synthetic fixtures.
-3. Report object with metrics, calibration, and inspected failure cases.
+2. Report object with metrics, calibration, and inspected failure cases.

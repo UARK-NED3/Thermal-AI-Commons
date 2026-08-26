@@ -73,6 +73,10 @@ Released component references are listed in
 pinning and upgrade rules, the [time-alignment record](docs/time-alignment.md),
 and the [adapter contract](docs/adapter-contract.md).
 
+Generate a deterministic independent-group split manifest with
+[`examples/synthetic-groups.json`](examples/synthetic-groups.json); see
+[group-level benchmark splits](docs/group-splits.md) for leakage boundaries.
+
 ## Repository layout
 
 ```text
