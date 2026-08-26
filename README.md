@@ -58,10 +58,20 @@ Validate a manifest without changing its referenced data:
 py -3.12 -m thermal_ai_commons.cli validate examples/synthetic-experiment-manifest.json
 ```
 
+For a data package intended to support a quantitative multimodal analysis,
+require alignment, calibration, and uncertainty declarations as well:
+
+```powershell
+py -3.12 -m thermal_ai_commons.cli validate `
+  examples/synthetic-quantitative-multimodal-manifest.json `
+  --profile quantitative-multimodal
+```
+
 Released component references are listed in
 [`components/registry-v0.1.json`](components/registry-v0.1.json). See the
 [component integration policy](docs/component-integration-policy.md) for the
-pinning and upgrade rules.
+pinning and upgrade rules, the [time-alignment record](docs/time-alignment.md),
+and the [adapter contract](docs/adapter-contract.md).
 
 ## Repository layout
 

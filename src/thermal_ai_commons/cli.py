@@ -14,11 +14,17 @@ def main() -> int:
     validate_parser = subparsers.add_parser("validate", help="validate an experiment manifest")
     validate_parser.add_argument("manifest", type=Path, help="JSON experiment-manifest file")
     validate_parser.add_argument("--schema", type=Path, help="optional replacement JSON Schema")
+    validate_parser.add_argument(
+        "--profile",
+        choices=("core", "quantitative-multimodal"),
+        default="core",
+        help="metadata profile to validate; does not establish physical validation",
+    )
     args = parser.parse_args()
 
     if args.command == "validate":
         try:
-            validate_manifest_file(args.manifest, args.schema)
+            validate_manifest_file(args.manifest, args.schema, args.profile)
         except (ManifestValidationError, OSError) as error:
             parser.exit(2, f"validation failed: {error}\n")
         print(f"valid manifest: {args.manifest}")

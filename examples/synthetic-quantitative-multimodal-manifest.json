@@ -1,0 +1,51 @@
+{
+  "schema_version": "0.1.0",
+  "experiment_id": "synthetic-multimodal-demo-001",
+  "evidence_class": "synthetic",
+  "modalities": [
+    {
+      "name": "optical",
+      "time_base": "camera_clock_s",
+      "units": "pixel",
+      "sampling_rate_hz": 1000,
+      "data_access": "public"
+    },
+    {
+      "name": "thermal",
+      "time_base": "daq_clock_s",
+      "units": "K",
+      "sampling_rate_hz": 100,
+      "data_access": "public"
+    }
+  ],
+  "synchronization": {
+    "reference_clock": "daq_clock_s",
+    "alignments": [
+      {
+        "modality": "optical",
+        "source_clock": "camera_clock_s",
+        "method": "synthetic_trigger",
+        "status": "illustrative_only",
+        "offset_s": 0.003,
+        "drift_ppm": 0.0,
+        "residual_std_s": 0.0001
+      },
+      {
+        "modality": "thermal",
+        "source_clock": "daq_clock_s",
+        "method": "shared_clock",
+        "status": "illustrative_only",
+        "offset_s": 0.0,
+        "drift_ppm": 0.0,
+        "residual_std_s": 0.0
+      }
+    ]
+  },
+  "calibration": {"status": "synthetic"},
+  "uncertainty": {"status": "illustrative_only"},
+  "rights": {
+    "owner": "NED3 synthetic demonstration",
+    "redistribution_permission": "yes",
+    "review_state": "approved"
+  }
+}

@@ -4,7 +4,12 @@ from pathlib import Path
 import pytest
 
 from thermal_ai_commons import SCHEMA_VERSION
-from thermal_ai_commons.contracts import ManifestValidationError, load_schema, validate_manifest
+from thermal_ai_commons.contracts import (
+    ManifestValidationError,
+    load_schema,
+    validate_manifest,
+    validate_quantitative_multimodal_profile,
+)
 
 
 ROOT = Path(__file__).resolve().parents[1]
@@ -43,3 +48,21 @@ def test_validator_reports_missing_required_field() -> None:
 
     with pytest.raises(ManifestValidationError, match="rights"):
         validate_manifest(example)
+
+
+def test_quantitative_profile_accepts_synthetic_multimodal_example() -> None:
+    manifest = json.loads(
+        (ROOT / "examples" / "synthetic-quantitative-multimodal-manifest.json").read_text()
+    )
+
+    validate_quantitative_multimodal_profile(manifest)
+
+
+def test_quantitative_profile_requires_alignment_for_every_modality() -> None:
+    manifest = json.loads(
+        (ROOT / "examples" / "synthetic-quantitative-multimodal-manifest.json").read_text()
+    )
+    manifest["synchronization"]["alignments"].pop()
+
+    with pytest.raises(ManifestValidationError, match="thermal"):
+        validate_quantitative_multimodal_profile(manifest)

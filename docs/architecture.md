@@ -38,10 +38,13 @@ Traceable report and optional derived-data release
    the packaged v0.1 contract without changing the referenced data.
 2. The component registry pins released SeqReg, BubbleID, and BubbleID-Flow
    versions with their rights status.
+3. `TimeAlignmentRecord` stores an explicit source-to-reference-clock mapping
+   and residual timing metadata without inferring sensor alignment.
+4. The adapter contract distinguishes successful, abstained, and failed runs.
 
 ## Next interfaces
 
-1. Time-alignment interface that records reference clock, offset, and residual.
-2. Adapter protocol for released SeqReg and BubbleID.
-3. Condition-group split generator.
-4. Report object with metrics, calibration, and inspected failure cases.
+1. Condition-group split generator.
+2. Concrete adapters for released SeqReg and BubbleID using rights-cleared
+   synthetic fixtures.
+3. Report object with metrics, calibration, and inspected failure cases.
