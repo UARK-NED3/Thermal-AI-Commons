@@ -1,0 +1,14 @@
+{
+  "assignments": {
+    "run-001": "validation",
+    "run-002": "train",
+    "run-003": "train",
+    "run-004": "train",
+    "run-005": "validation",
+    "run-006": "test"
+  },
+  "experiment_id": "synthetic-multimodal-demo-001",
+  "group_unit": "experiment_run",
+  "seed": 42,
+  "split_version": "0.1.0"
+}

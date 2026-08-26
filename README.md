@@ -77,6 +77,19 @@ Generate a deterministic independent-group split manifest with
 [`examples/synthetic-groups.json`](examples/synthetic-groups.json); see
 [group-level benchmark splits](docs/group-splits.md) for leakage boundaries.
 
+Create a machine-readable [evidence report](docs/evidence-reports.md) that
+hashes the exact manifest and split, resolves pinned component releases, and
+records the claim stage, uncertainty declaration, failure cases, and
+limitations:
+
+```powershell
+py -3.12 -m thermal_ai_commons.cli report `
+  --input examples/synthetic-report-input.json `
+  --manifest examples/synthetic-quantitative-multimodal-manifest.json `
+  --split examples/synthetic-split-v0.1.json `
+  --out $env:TEMP\thermal-ai-commons-evidence-report.json
+```
+
 ## Repository layout
 
 ```text

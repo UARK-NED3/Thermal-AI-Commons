@@ -7,6 +7,7 @@ import json
 from pathlib import Path
 
 from thermal_ai_commons.contracts import ManifestValidationError, validate_manifest_file
+from thermal_ai_commons.reports import create_evidence_report, write_evidence_report
 from thermal_ai_commons.splits import make_group_split, write_group_split_manifest
 
 
@@ -26,6 +27,17 @@ def main() -> int:
     split_parser.add_argument("groups", type=Path, help="JSON file with experiment_id, group_unit, and groups")
     split_parser.add_argument("--out", type=Path, required=True, help="output split-manifest JSON path")
     split_parser.add_argument("--seed", type=int, default=0, help="deterministic shuffle seed")
+    report_parser = subparsers.add_parser("report", help="create a machine-readable evidence report")
+    report_parser.add_argument("--input", type=Path, required=True, help="JSON result and claim declaration")
+    report_parser.add_argument("--manifest", type=Path, required=True, help="experiment-manifest JSON path")
+    report_parser.add_argument("--split", type=Path, required=True, help="group split-manifest JSON path")
+    report_parser.add_argument(
+        "--registry",
+        type=Path,
+        default=Path("components/registry-v0.1.json"),
+        help="pinned component registry JSON path",
+    )
+    report_parser.add_argument("--out", type=Path, required=True, help="output evidence-report JSON path")
     args = parser.parse_args()
 
     if args.command == "validate":
@@ -47,6 +59,13 @@ def main() -> int:
         except (KeyError, OSError, ValueError, json.JSONDecodeError) as error:
             parser.exit(2, f"split creation failed: {error}\n")
         print(f"wrote split manifest: {args.out}")
+    if args.command == "report":
+        try:
+            report = create_evidence_report(args.input, args.manifest, args.split, args.registry)
+            write_evidence_report(args.out, report)
+        except (KeyError, OSError, TypeError, ValueError, json.JSONDecodeError) as error:
+            parser.exit(2, f"evidence report creation failed: {error}\n")
+        print(f"wrote evidence report: {args.out}")
     return 0
 
 

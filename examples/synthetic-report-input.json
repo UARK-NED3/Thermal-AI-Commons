@@ -1,0 +1,22 @@
+{
+  "report_id": "synthetic-evidence-report-001",
+  "task": "Synthetic multimodal provenance demonstration",
+  "method": "Schema, release-pin, split, and evidence-record demonstration only",
+  "physical_boundary": "No physical system or sensor signal is represented; all inputs are synthetic metadata.",
+  "evidence_class": "synthetic",
+  "claim_stage": "demonstration",
+  "component_ids": ["seqreg", "bubbleid"],
+  "metrics": {},
+  "calibration": {
+    "status": "not_applicable_synthetic_example"
+  },
+  "uncertainty": {
+    "status": "illustrative_only"
+  },
+  "failure_cases": [
+    "No model execution, sensor alignment, or physical calibration is represented."
+  ],
+  "limitations": [
+    "This report does not validate model accuracy, generalization, or deployment readiness."
+  ]
+}
