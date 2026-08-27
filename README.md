@@ -13,6 +13,20 @@ validated universal model, a field-ready diagnostic, a digital twin, or a
 public benchmark dataset. No raw experimental, confidential, licensed, or
 sponsor-restricted data are included.
 
+## Flagship ecosystem
+
+Thermal AI Commons is the NED³ flagship interoperability hub for AI-enabled
+boiling and thermal-fluid research. It connects independent repositories while
+preserving their authorship, issue history, licenses, and release cadence.
+
+The canonical workflow is:
+
+`BoilingBench-Multimodal → BoilingLab → BubbleID/BubbleID-Flow → SeqReg → Commons evidence report`
+
+This is a versioned integration path, not a monorepo. See the
+[ecosystem integration guide](docs/ecosystem.md) for component roles, release
+pinning, and the minimum provenance recorded for a benchmark result.
+
 ## Why a Commons?
 
 The Commons connects independently maintained NED3 tools through shared
@@ -24,9 +38,17 @@ their source code, data, or release processes.
 | [BoilingLab](https://github.com/UARK-NED3/BoilingLab) | Experimental protocols, acquisition, and synchronization context |
 | [BubbleID-Flow](https://github.com/UARK-NED3/BubbleID-Flow) | Optical flow-boiling analysis adapter target |
 | [BubbleID-Workflow](https://github.com/UARK-NED3/BubbleID-Workflow) | Image-analysis workflow adapter target |
+| [BubbleID](https://github.com/cldunlap73/BubbleID) | Bubble segmentation, tracking, and interface-dynamics feature extraction |
+| [SeqReg](https://github.com/cldunlap73/SeqReg) | Sequence-regression framework for temporal and multimodal prediction |
 | [AELab](https://github.com/UARK-NED3/AELab) | Acoustic-emission sensing adapter target |
 | [BoilingBench-Multimodal](https://github.com/UARK-NED3/BoilingBench-Multimodal) | Seed benchmark/data collaboration target |
 | [FlowLab](https://github.com/UARK-NED3/FlowLab) | Cooling-loop experimental context |
+
+The Commons supplies shared contracts and evaluation—not a claim that every
+component is itself a validated heat-transfer model. BoilingLab is a
+physics-aware processing and synchronization tool; BubbleID and BubbleID-Flow
+are computer-vision feature extractors; SeqReg is a reusable temporal-learning
+framework.
 
 ## Initial capabilities
 
@@ -110,8 +132,9 @@ or training rights. See [CONTRIBUTING.md](CONTRIBUTING.md).
 
 ## Citation
 
-Citation metadata will be added at the first tagged release. Until then, cite
-the specific component repository and associated paper or dataset actually used.
+For the current infrastructure release, see [CITATION.cff](CITATION.cff). Cite
+the specific dataset, software release, and associated paper actually used;
+Commons integration does not replace component-level citation.
 
 ## License
 
