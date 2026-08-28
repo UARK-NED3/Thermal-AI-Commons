@@ -1,0 +1,177 @@
+\documentclass[11pt]{article}
+\usepackage[margin=1in]{geometry}
+\usepackage{amsmath,amssymb,booktabs,graphicx,xcolor,hyperref,url}
+\usepackage[round,authoryear]{natbib}
+\hypersetup{colorlinks=true,linkcolor=blue,citecolor=blue,urlcolor=blue}
+\newcommand{\placeholder}[1]{\fcolorbox{gray}{gray!8}{\parbox{0.94\linewidth}{\textbf{PLACEHOLDER:} #1}}}
+\newcommand{\commons}{Thermal AI Commons}
+\newcommand{\ned}{NED$^3$}
+
+\title{BoilingBench-Multimodal and Thermal AI Commons:\\A Reproducible Benchmark Ecosystem for AI-Enabled Boiling Heat Transfer}
+\author{Han Hu\\[2pt]\small University of Arkansas, NED$^3$ Laboratory\\\small\textit{Author list and contribution order require team confirmation.}}
+\date{Draft prepared for arXiv submission planning\\\today}
+
+\begin{document}
+\maketitle
+
+\begin{abstract}
+Machine-learning studies in boiling heat transfer often report results from isolated experiments, private datasets, randomly partitioned temporal windows, and derived targets whose uncertainty is not tracked. These practices make model comparisons and claims of generalization difficult. We present BoilingBench-Multimodal, a seven-track benchmark family, and Thermal AI Commons, an interoperability and evidence layer that connects versioned data, physics-aware processing, computer-vision feature extraction, and temporal-learning tools while preserving independent repository ownership and licensing. The benchmark spans multimodal pool boiling, human-annotated boiling images, acoustic sensing, and infrared immersion cooling. The release provides dataset cards, manifests, synchronization records, task definitions, leakage-safe split specifications, and archival and machine-learning distribution endpoints. We define a reference workflow that links BoilingLab, BubbleID, BubbleID-Flow, and SeqReg and records the exact data, software, split, and environment versions for each result. We further specify a baseline and validation program covering thermal regression, regime or transition classification, image-derived vapor metrics, multimodal fusion, missing-modality robustness, and cross-condition generalization. Quantitative benchmark results are intentionally marked as pending until the independent run-level inventory, calibration audit, baseline experiments, and external validation are completed. The contribution of this paper is therefore a reproducible benchmark and ecosystem design with explicit evidence boundaries, rather than a claim of a universal heat-transfer model.
+\end{abstract}
+
+\section{Introduction}
+\label{sec:intro}
+
+Two-phase thermal systems are difficult targets for machine learning because the measured signals are heterogeneous, asynchronous, condition-dependent, and coupled to interfacial physics. Recent work has catalogued open datasets and AI methods using a spatial--temporal taxonomy and identified metadata, decoders, benchmark splits, baseline models, and community databanks as infrastructure needs \citep{dunlap2026review}. That review described NED$^3$ resources as one implementation case. The present work reports the subsequent benchmark and software-integration step.
+
+The central problem is not simply a shortage of neural architectures. A model score is difficult to interpret when adjacent windows from one experiment are split across partitions, when preprocessing uses information from held-out runs, when heat flux is reconstructed from thermocouples without geometry metadata, or when a missing sensor channel is silently replaced. A useful benchmark must expose these issues and make them auditable.
+
+We introduce two connected research objects:
+\begin{enumerate}
+  \item \textbf{BoilingBench-Multimodal}, a versioned family of seven dataset tracks with raw or authorized source files, derived products, annotations, manifests, task definitions, and group-level split rules; and
+  \item \textbf{Thermal AI Commons}, a lightweight interoperability layer that specifies contracts for provenance, time alignment, component versions, uncertainty declarations, evidence reports, and benchmark evaluation.
+\end{enumerate}
+
+The intended contribution is an empirical and reproducible benchmark ecosystem. The paper will not claim that all derived heat-flux values are ground truth, that all linked software is one package, or that performance on one facility transfers automatically to another.
+
+\paragraph{Contributions.} The paper contributes (i) a physically characterized benchmark family; (ii) a release and interoperability architecture spanning independent repositories; (iii) a leakage-safe, uncertainty-aware evaluation protocol; (iv) a baseline suite designed to reveal the value and failure modes of multimodal learning; and (v) archival and machine-learning distribution practices that bind GitHub release $v0.1.0$, the Hugging Face Lite profile, and Zenodo DOI $10.5281/zenodo.22131859$. Items (iii)--(iv) require the experiments and audits listed in Section~\ref{sec:remaining} before the manuscript can make quantitative claims.
+
+\section{Relationship to prior work}
+\label{sec:prior}
+
+The companion review established the field-wide motivation, taxonomy, and open-data roadmap \citep{dunlap2026review}. This paper must be differentiated from that review by reporting released artifacts, exact data provenance, executable contracts, benchmark tasks, and measured baseline behavior. It should cite the review as the motivation rather than repeat its catalog.
+
+Prior boiling studies have demonstrated useful applications of neural networks, acoustic sensing, and image analysis, but comparisons are often limited by private data, single-condition evaluation, or unclear separation between measured and reconstructed quantities. BoilingBench addresses this gap through explicit evidence classes and independent-group splits. The benchmark is complementary to, rather than a replacement for, the source Dryad datasets and the publications describing individual experiments.
+
+\section{Ecosystem design}
+\label{sec:ecosystem}
+
+\subsection{Roles and boundaries}
+
+The ecosystem is intentionally not a monorepo. BoilingBench is the data and task layer. BoilingLab provides experimental-data parsing, clock synchronization, thermal reconstruction, acoustic features, hysteresis analysis, and machine-readable exports. BubbleID and BubbleID-Flow provide image-derived bubble and vapor-area features. SeqReg provides reusable sequence-to-value and sequence-to-sequence learning. Thermal AI Commons supplies shared contracts, adapter boundaries, group-level split generation, compatibility pinning, and evidence reports. Each repository retains its own authorship, issue history, release cadence, and license.
+
+\begin{figure}[t]
+\centering
+\fbox{\parbox{0.88\linewidth}{\centering\vspace{1.1cm}Figure placeholder: ecosystem architecture and provenance flow\\\small BoilingBench data $\rightarrow$ manifest/rights/time alignment $\rightarrow$ BoilingLab and vision adapters $\rightarrow$ SeqReg or other models $\rightarrow$ split-aware evidence report\vspace{1.1cm}}}
+\caption{Thermal AI Commons as an interoperability and evidence layer connecting independently released NED$^3$ datasets and software.}
+\label{fig:ecosystem}
+\end{figure}
+
+\subsection{Version and evidence contract}
+
+Every archived result records a tuple
+\begin{equation}
+  (d, p, f, m, s, e) = (\text{dataset revision},\ \text{processor},\ \text{feature extractors},\ \text{model},\ \text{split},\ \text{environment}),
+\end{equation}
+including release tags, commit hashes, manifest and split hashes, units, sampling rates, target status, quality flags, and uncertainty declarations. Development branches are allowed for adapter prototyping; published results use immutable releases. A component upgrade creates a new compatibility and evidence-report version.
+
+\section{BoilingBench-Multimodal}
+\label{sec:dataset}
+
+\subsection{Dataset family}
+
+Table~\ref{tab:tracks} summarizes the seven tracks. The final paper must replace the pending inventory fields with a generated manifest and independent-run counts.
+
+\begin{table}[t]
+\centering\small
+\caption{BoilingBench tracks and evidence boundaries.}
+\label{tab:tracks}
+\begin{tabular}{p{0.16\linewidth}p{0.27\linewidth}p{0.27\linewidth}p{0.21\linewidth}}
+\toprule
+Track & Physical system & Principal modalities & Important limitation\\
+\midrule
+BB-1 & Ambient, subcooled, flat-Cu pool boiling & Video, temperature, pressure, power, hydrophone, AE & Derived thermal labels; MEB and hysteresis products\\
+BB-2 & Subatmospheric, saturated, flat-Cu pool boiling & Video, temperature, pressure, power, hydrophone, AE & No MEB regime; derived thermal labels\\
+BB-3 & Ambient, saturated, Cu-foam pool boiling & Video, temperature, hydrophone, microphone, legacy AE & No continuous AE waveform export; geometry audit required\\
+BB-4 & Ambient, saturated, flat-Cu pool boiling & Video, temperature, hydrophone, microphone, legacy AE & No continuous AE waveform export\\
+BB-5 & Human-annotated boiling images & RGB images and annotations & Human labels and model predictions must remain separate\\
+BB-6 & Ambient, saturated, flat-Cu pool boiling & Hydrophone and temperature & Single-modality emphasis\\
+BB-7 & Closed HFE-7100/water immersion cooling & IR and thermal/electrical logs & Immersion cooling, not conventional pool boiling\\
+\bottomrule
+\end{tabular}
+\end{table}
+
+The public Lite profile omits original Phantom `.cine` files while retaining the released processed and tabular products documented in its omission manifest. BoilingBench-3 and -4 were acquired with a legacy MISTRAS USB AE Node and therefore do not support claims of continuous AE waveform or waveform-spectrogram analysis. The dataset-specific cards document source Dryad records and associated publications.
+
+\subsection{Provenance, synchronization, and derived quantities}
+
+Temperature is the reference time axis when declared by the experiment. Other modalities are offset using recorded clock times, with residual alignment uncertainty retained rather than silently rounded away. Thermal reconstruction uses experiment-specific thermocouple order, geometry, material properties, and regression assumptions. Heat flux and surface temperature generated by BoilingLab are derived quantities and must carry $R^2$, quality, calibration, and applicability fields.
+
+\section{Benchmark tasks and evaluation}
+\label{sec:tasks}
+
+We define six task families. The final version will publish task-specific input and target schemas, fixed splits, and baseline configuration files.
+
+\begin{enumerate}
+  \item \textbf{Acoustic heat-flux regression:} hydrophone, microphone, or AE-hit features to a declared heat-flux target.
+  \item \textbf{Regime and transition classification:} classify regimes or critical events with run-held-out testing.
+  \item \textbf{Bubble and vapor metrics:} segmentation, morphology, and vapor-area prediction from images or videos.
+  \item \textbf{Multimodal fusion:} combine thermal, optical, pressure, electrical, and acoustic histories with explicit missingness.
+  \item \textbf{Cross-domain generalization:} hold out geometry, pressure, fluid, surface, or dataset domains.
+  \item \textbf{Uncertainty and abstention:} evaluate calibration, out-of-domain detection, and model abstention under missing or degraded modalities.
+\end{enumerate}
+
+All temporal windows from one independent run remain in one partition. Normalization, feature selection, and learned preprocessing are fitted on training runs only. Metrics will include MAE, RMSE, $R^2$, rank correlation where appropriate, calibration error, and event-detection measures, together with uncertainty intervals and the number of independent runs.
+
+\subsection{Baseline suite}
+
+The baseline suite will compare persistence and mean predictors, ridge regression, gradient-boosted trees, a SeqReg temporal model, an image model for BB-5, a multimodal fusion model, and a physics-constrained or physics-informed variant when the target definition permits it. Ablations will remove modalities, shorten temporal context, vary training-set size, and compare random-window, run-held-out, condition-held-out, and dataset-held-out splits.
+
+\placeholder{Insert measured inventory, baseline metrics, uncertainty results, ablations, and external-validation results. No quantitative claim should remain in the abstract or conclusion until these values are independently reproduced.}
+
+\section{Reproducibility and distribution}
+\label{sec:release}
+
+The benchmark control repository contains cards, schemas, manifests, task definitions, split rules, validation scripts, and citation metadata. The Lite data profile is distributed through Hugging Face and archived on Zenodo. GitHub release $v0.1.0$ identifies the control-plane state; the Zenodo record is the archival citation target; Hugging Face is the ML-facing access endpoint. The release omits `.cine` files and must not be represented as the complete raw archive.
+
+The release is reproducible only when users retain the exact manifest, processing release, split file, and environment. A clean-environment smoke test, checksum verification, and a reference end-to-end run are required before claiming public reproducibility. Rights for raw files, annotations, derived products, and model checkpoints must be audited independently; software licenses do not automatically license data.
+
+\section{Discussion}
+\label{sec:discussion}
+
+The benchmark's scientific value comes from making difficult comparisons explicit. Heterogeneity across pressure, subcooling, surface structure, sensor configuration, and acquisition hardware is a source of domain shift rather than a nuisance to be hidden. The benchmark can therefore support both within-domain prediction and deliberate tests of transfer.
+
+Several limitations must remain visible. Some targets are reconstructed by linear regression and are not independent measurements. Cu-foam cases may not support flat-copper conductivity or extrapolation assumptions. Missing pressure or power channels limit thermal interpretation for some tracks. Legacy AE acquisition prevents continuous-waveform analysis in BB-3 and BB-4. Human annotations and model predictions have different evidence status. Finally, a public benchmark does not establish redistribution or training rights for every third-party component.
+
+\section{Required completion work}
+\label{sec:remaining}
+
+Before submission, the following gates must be closed:
+\begin{enumerate}
+  \item Generate and review a complete track/run/file inventory, including independent specimens and conditions.
+  \item Complete the rights and attribution audit for each released artifact and confirm the CC BY 4.0 scope.
+  \item Verify clock alignment, thermocouple geometry, calibration, units, and uncertainty fields.
+  \item Publish immutable task schemas, group-level splits, checksums, and omission manifests.
+  \item Run and reproduce the baseline, ablation, calibration, and failure-case experiments.
+  \item Add at least one independent external-validation or collaborator-held-out evaluation when rights permit.
+  \item Test the reference pipeline in a clean supported environment and archive the evidence report.
+  \item Reconcile exact GitHub, Hugging Face, and Zenodo version identifiers and update all citation files.
+\end{enumerate}
+
+\section{Conclusion}
+
+BoilingBench-Multimodal and Thermal AI Commons provide a concrete infrastructure response to the benchmark gap identified in the companion review. Their publishable contribution will be established by the quality of the data contract, the honesty of evidence labels, and the behavior of models under independent and cross-domain evaluation. The current manuscript is an arXiv-ready scaffold; the benchmark claims remain conditional until the completion gates in Section~\ref{sec:remaining} are verified.
+
+\bibliographystyle{plainnat}
+\begin{thebibliography}{9}
+\bibitem[Dunlap et~al.(2026)]{dunlap2026review}
+C. Dunlap, R. Olabiyi, F. Al-Hindawi, H. Pandey, S. Pierson, D. Curl, B. Stevens, M. I. Hossain, A. Parjuli, C. Joshi, A. Iquebal, and H. Hu.
+\newblock Open datasets and machine learning for two-phase heat transfer: a review following a spatial-temporal taxonomy.
+\newblock \emph{Transport Phenomena}, 1(3), 2026. DOI: \href{https://doi.org/10.1515/tp-2026-0081}{10.1515/tp-2026-0081}; arXiv:2605.23037.
+
+\bibitem[Hu et~al.(2026)]{commons}
+NED$^3$ Laboratory.
+\newblock Thermal AI Commons, version 0.1.0 development release.
+\newblock \href{https://github.com/UARK-NED3/Thermal-AI-Commons}{https://github.com/UARK-NED3/Thermal-AI-Commons}.
+
+\bibitem[NED3(2026a)]{benchrepo}
+NED$^3$ Laboratory.
+\newblock BoilingBench-Multimodal, version 0.1.0.
+\newblock \href{https://github.com/UARK-NED3/BoilingBench-Multimodal/releases/tag/v0.1.0}{GitHub release}; \href{https://doi.org/10.5281/zenodo.22131859}{Zenodo DOI}.
+
+\bibitem[NED3(2026b)]{benchdata}
+NED$^3$ Laboratory.
+\newblock BoilingBench-Multimodal Lite, version 0.1.0.
+\newblock \href{https://huggingface.co/datasets/hanhuark/BoilingBench-Multimodal}{Hugging Face dataset}; \href{https://doi.org/10.5281/zenodo.22131859}{Zenodo DOI}.
+\end{thebibliography}
+
+\end{document}
