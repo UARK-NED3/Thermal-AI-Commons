@@ -95,6 +95,12 @@ Released component references are listed in
 pinning and upgrade rules, the [time-alignment record](docs/time-alignment.md),
 and the [adapter contract](docs/adapter-contract.md).
 
+For discovery and workflow routing, the separate
+[resource-card registry](components/resource-cards-v0.1.json) records supported
+tasks, required inputs, outputs, evidence ceilings, and explicit exclusions for
+canonical NED3 resources. It does not relax component-pinning, data-rights, or
+validation requirements; see the [resource-card guide](docs/resource-cards.md).
+
 Generate a deterministic independent-group split manifest with
 [`examples/synthetic-groups.json`](examples/synthetic-groups.json); see
 [group-level benchmark splits](docs/group-splits.md) for leakage boundaries.

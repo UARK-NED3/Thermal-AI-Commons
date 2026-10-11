@@ -1,0 +1,48 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://github.com/UARK-NED3/Thermal-AI-Commons/schemas/resource-card-registry-v0.1.json",
+  "title": "NED3 Thermal AI Commons resource-card registry",
+  "description": "Discovery and workflow-routing metadata. A card is not a validation certificate or redistribution authorization.",
+  "type": "object",
+  "required": ["registry_version", "purpose", "cards"],
+  "properties": {
+    "registry_version": {"const": "0.1.0"},
+    "purpose": {"type": "string", "minLength": 1},
+    "cards": {
+      "type": "array",
+      "minItems": 1,
+      "items": {
+        "type": "object",
+        "required": [
+          "id", "name", "repository", "default_branch", "reference", "license_status",
+          "product_kind", "supported_tasks", "required_inputs", "outputs", "evidence_ceiling",
+          "not_supported", "commons_relationship"
+        ],
+        "properties": {
+          "id": {"type": "string", "pattern": "^[a-z0-9][a-z0-9-]{2,63}$"},
+          "name": {"type": "string", "minLength": 1},
+          "repository": {"type": "string", "pattern": "^https://github\\.com/"},
+          "default_branch": {"type": "string", "minLength": 1},
+          "reference": {
+            "type": "object",
+            "required": ["reference_type", "commit", "accessed_on"],
+            "properties": {
+              "reference_type": {"enum": ["commit_snapshot", "release_tag"]},
+              "commit": {"type": "string", "pattern": "^[0-9a-f]{40}$"},
+              "release_tag": {"type": "string", "minLength": 1},
+              "accessed_on": {"type": "string", "format": "date"}
+            }
+          },
+          "license_status": {"enum": ["declared", "not_declared", "verify_before_reuse"]},
+          "product_kind": {"enum": ["interoperability_infrastructure", "curated_discovery", "screening_analysis", "surrogate_modeling", "experimental_workflow"]},
+          "supported_tasks": {"type": "array", "minItems": 1, "items": {"type": "string", "minLength": 1}},
+          "required_inputs": {"type": "array", "items": {"type": "string", "minLength": 1}},
+          "outputs": {"type": "array", "minItems": 1, "items": {"type": "string", "minLength": 1}},
+          "evidence_ceiling": {"enum": ["metadata_only", "screening", "workflow", "model_evaluation_required"]},
+          "not_supported": {"type": "string", "minLength": 1},
+          "commons_relationship": {"enum": ["canonical_commons", "catalog_discovery", "candidate_adapter", "evidence_consumer"]}
+        }
+      }
+    }
+  }
+}

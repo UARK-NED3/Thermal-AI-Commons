@@ -8,6 +8,7 @@ from pathlib import Path
 
 from thermal_ai_commons.contracts import ManifestValidationError, validate_manifest_file
 from thermal_ai_commons.reports import create_evidence_report, write_evidence_report
+from thermal_ai_commons.resources import ResourceCardValidationError, load_resource_registry
 from thermal_ai_commons.splits import make_group_split, write_group_split_manifest
 
 
@@ -38,6 +39,12 @@ def main() -> int:
         help="pinned component registry JSON path",
     )
     report_parser.add_argument("--out", type=Path, required=True, help="output evidence-report JSON path")
+    resources_parser = subparsers.add_parser("resources", help="validate or list workflow-routing resource cards")
+    resources_parser.add_argument("action", choices=("validate", "list"))
+    resources_parser.add_argument(
+        "registry", type=Path, nargs="?", default=Path("components/resource-cards-v0.1.json"),
+        help="resource-card registry JSON path",
+    )
     args = parser.parse_args()
 
     if args.command == "validate":
@@ -66,6 +73,16 @@ def main() -> int:
         except (KeyError, OSError, TypeError, ValueError, json.JSONDecodeError) as error:
             parser.exit(2, f"evidence report creation failed: {error}\n")
         print(f"wrote evidence report: {args.out}")
+    if args.command == "resources":
+        try:
+            registry = load_resource_registry(args.registry)
+        except (ResourceCardValidationError, OSError, json.JSONDecodeError) as error:
+            parser.exit(2, f"resource-card validation failed: {error}\n")
+        if args.action == "validate":
+            print(f"valid resource-card registry: {args.registry}")
+        else:
+            for card in registry["cards"]:
+                print(f"{card['id']}: {card['product_kind']} ({card['evidence_ceiling']})")
     return 0
 
 
