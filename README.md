@@ -101,6 +101,19 @@ tasks, required inputs, outputs, evidence ceilings, and explicit exclusions for
 canonical NED3 resources. It does not relax component-pinning, data-rights, or
 validation requirements; see the [resource-card guide](docs/resource-cards.md).
 
+For portfolio-wide interoperability, a canonical repository can also publish a
+[resource manifest](docs/resource-manifest.md). The manifest captures intended
+use, inputs/outputs, lifecycle, evidence boundaries, and reuse status without
+moving code or data into this repository. Validate one locally with:
+
+```powershell
+py -3.12 -m thermal_ai_commons.cli resource-manifest validate `
+  examples/ned3-resource-manifest-v0.1.example.json
+```
+
+The Commons' own reviewed manifest is at
+[`.ned3/resource-manifest-v0.1.json`](.ned3/resource-manifest-v0.1.json).
+
 Generate a deterministic independent-group split manifest with
 [`examples/synthetic-groups.json`](examples/synthetic-groups.json); see
 [group-level benchmark splits](docs/group-splits.md) for leakage boundaries.

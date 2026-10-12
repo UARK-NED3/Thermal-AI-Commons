@@ -13,8 +13,36 @@ class ResourceCardValidationError(ValueError):
     """Raised when resource-card metadata is incomplete or internally inconsistent."""
 
 
+class ResourceManifestValidationError(ValueError):
+    """Raised when repository-owned resource metadata is incomplete or inconsistent."""
+
+
 def default_resource_card_schema_path() -> Path:
     return Path(__file__).resolve().parents[2] / "schemas" / "resource-card-registry-v0.1.json"
+
+
+def default_resource_manifest_schema_path() -> Path:
+    return Path(__file__).resolve().parent / "_schemas" / "resource-manifest-v0.1.json"
+
+
+def validate_resource_manifest(manifest: Mapping[str, Any], schema_path: Path | None = None) -> None:
+    """Validate a repository-owned resource manifest; no scientific claim is certified."""
+    schema = json.loads((schema_path or default_resource_manifest_schema_path()).read_text(encoding="utf-8"))
+    errors = sorted(Draft202012Validator(schema).iter_errors(manifest), key=lambda error: list(error.path))
+    if errors:
+        details = [
+            f"{'/'.join(str(item) for item in error.path) or '<root>'}: {error.message}"
+            for error in errors
+        ]
+        raise ResourceManifestValidationError("Resource manifest is invalid:\n- " + "\n- ".join(details))
+
+
+def load_resource_manifest(path: str | Path) -> dict[str, Any]:
+    """Load and structurally validate a repository-owned resource manifest."""
+    manifest_path = Path(path)
+    manifest = json.loads(manifest_path.read_text(encoding="utf-8"))
+    validate_resource_manifest(manifest)
+    return manifest
 
 
 def validate_resource_registry(registry: Mapping[str, Any], schema_path: Path | None = None) -> None:

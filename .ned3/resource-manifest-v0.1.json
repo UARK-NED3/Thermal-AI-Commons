@@ -1,0 +1,54 @@
+{
+  "manifest_version": "0.1.0",
+  "resource": {
+    "id": "thermal-ai-commons",
+    "name": "NED3 Thermal AI Commons",
+    "kind": "infrastructure",
+    "visibility": "public"
+  },
+  "canonical_repository": {
+    "url": "https://github.com/UARK-NED3/Thermal-AI-Commons",
+    "default_branch": "main",
+    "reference": "6589b3dcd05d5d1419edb7786de07bd917851d6a",
+    "accessed_on": "2026-10-12"
+  },
+  "lifecycle": {
+    "status": "active_research",
+    "maintainer_review": "reviewed"
+  },
+  "intended_use": {
+    "users": ["researchers and software maintainers integrating thermal-fluid research workflows"],
+    "supported_tasks": [
+      "validate experiment metadata",
+      "create deterministic group-level split manifests",
+      "produce machine-readable evidence reports",
+      "validate discovery and repository-owned resource metadata"
+    ],
+    "not_intended_for": [
+      "a universal validated model, a field-ready diagnostic, a digital twin, or automatic physical validation",
+      "redistributing data, weights, or third-party software based solely on catalog metadata"
+    ]
+  },
+  "interfaces": {
+    "required_inputs": ["versioned metadata manifests", "declared component references", "task-appropriate split groups or result declarations"],
+    "outputs": ["structural validation results", "deterministic split manifests", "machine-readable evidence reports", "resource metadata validation results"],
+    "execution": "documented_local"
+  },
+  "evidence": {
+    "ceiling": "metadata_only",
+    "validation_status": "not_claimed",
+    "limitations": [
+      "Structural validation does not establish data quality, physical applicability, model accuracy, or result reproducibility.",
+      "A resource manifest must be reviewed by the canonical repository maintainer before public portfolio indexing."
+    ]
+  },
+  "reuse": {
+    "software_license": "declared",
+    "data_rights": "not_included",
+    "citation": "citation_file"
+  },
+  "links": {
+    "documentation": "https://github.com/UARK-NED3/Thermal-AI-Commons#readme",
+    "issues": "https://github.com/UARK-NED3/Thermal-AI-Commons/issues"
+  }
+}

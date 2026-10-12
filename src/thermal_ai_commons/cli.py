@@ -8,7 +8,12 @@ from pathlib import Path
 
 from thermal_ai_commons.contracts import ManifestValidationError, validate_manifest_file
 from thermal_ai_commons.reports import create_evidence_report, write_evidence_report
-from thermal_ai_commons.resources import ResourceCardValidationError, load_resource_registry
+from thermal_ai_commons.resources import (
+    ResourceCardValidationError,
+    ResourceManifestValidationError,
+    load_resource_manifest,
+    load_resource_registry,
+)
 from thermal_ai_commons.splits import make_group_split, write_group_split_manifest
 
 
@@ -45,6 +50,11 @@ def main() -> int:
         "registry", type=Path, nargs="?", default=Path("components/resource-cards-v0.1.json"),
         help="resource-card registry JSON path",
     )
+    resource_manifest_parser = subparsers.add_parser(
+        "resource-manifest", help="validate repository-owned resource metadata"
+    )
+    resource_manifest_parser.add_argument("action", choices=("validate",))
+    resource_manifest_parser.add_argument("manifest", type=Path, help="resource-manifest JSON path")
     args = parser.parse_args()
 
     if args.command == "validate":
@@ -83,6 +93,12 @@ def main() -> int:
         else:
             for card in registry["cards"]:
                 print(f"{card['id']}: {card['product_kind']} ({card['evidence_ceiling']})")
+    if args.command == "resource-manifest":
+        try:
+            load_resource_manifest(args.manifest)
+        except (ResourceManifestValidationError, OSError, json.JSONDecodeError) as error:
+            parser.exit(2, f"resource-manifest validation failed: {error}\n")
+        print(f"valid resource manifest: {args.manifest}")
     return 0
 
 

@@ -1,0 +1,20 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://github.com/UARK-NED3/Thermal-AI-Commons/schemas/resource-manifest-v0.1.json",
+  "title": "NED3 resource manifest",
+  "description": "Repository-owned metadata for discovery, reproducibility triage, and evidence-aware workflow routing. It is not a validation certificate, release, or redistribution authorization.",
+  "type": "object",
+  "additionalProperties": false,
+  "required": ["manifest_version", "resource", "canonical_repository", "lifecycle", "intended_use", "interfaces", "evidence", "reuse", "links"],
+  "properties": {
+    "manifest_version": {"const": "0.1.0"},
+    "resource": {"type": "object", "additionalProperties": false, "required": ["id", "name", "kind", "visibility"], "properties": {"id": {"type": "string", "pattern": "^[a-z0-9][a-z0-9-]{2,63}$"}, "name": {"type": "string", "minLength": 1}, "kind": {"enum": ["software", "workflow", "benchmark", "dataset", "catalog", "educational_tool", "infrastructure"]}, "visibility": {"enum": ["public", "access_controlled", "private"]}}},
+    "canonical_repository": {"type": "object", "additionalProperties": false, "required": ["url", "default_branch", "reference", "accessed_on"], "properties": {"url": {"type": "string", "pattern": "^https://github\\.com/"}, "default_branch": {"type": "string", "minLength": 1}, "reference": {"type": "string", "pattern": "^[0-9a-f]{40}$"}, "accessed_on": {"type": "string", "format": "date"}}},
+    "lifecycle": {"type": "object", "additionalProperties": false, "required": ["status", "maintainer_review"], "properties": {"status": {"enum": ["prototype", "active_research", "maintained_release", "archived", "unknown"]}, "maintainer_review": {"enum": ["reviewed", "pending"]}}},
+    "intended_use": {"type": "object", "additionalProperties": false, "required": ["users", "supported_tasks", "not_intended_for"], "properties": {"users": {"type": "array", "minItems": 1, "items": {"type": "string", "minLength": 1}}, "supported_tasks": {"type": "array", "minItems": 1, "items": {"type": "string", "minLength": 1}}, "not_intended_for": {"type": "array", "minItems": 1, "items": {"type": "string", "minLength": 1}}}},
+    "interfaces": {"type": "object", "additionalProperties": false, "required": ["required_inputs", "outputs", "execution"], "properties": {"required_inputs": {"type": "array", "items": {"type": "string", "minLength": 1}}, "outputs": {"type": "array", "minItems": 1, "items": {"type": "string", "minLength": 1}}, "execution": {"enum": ["documented_local", "notebook_or_script", "hosted_application", "hardware_or_facility", "not_runnable", "unknown"]}}},
+    "evidence": {"type": "object", "additionalProperties": false, "required": ["ceiling", "validation_status", "limitations"], "properties": {"ceiling": {"enum": ["metadata_only", "educational", "screening", "workflow", "model_evaluation_required", "benchmark_protocol"]}, "validation_status": {"enum": ["not_claimed", "documented_in_repository", "requires_case_specific_evaluation"]}, "limitations": {"type": "array", "minItems": 1, "items": {"type": "string", "minLength": 1}}}},
+    "reuse": {"type": "object", "additionalProperties": false, "required": ["software_license", "data_rights", "citation"], "properties": {"software_license": {"enum": ["declared", "not_declared", "verify_before_reuse", "not_applicable"]}, "data_rights": {"enum": ["not_included", "declared_separately", "verify_before_reuse", "not_applicable"]}, "citation": {"enum": ["repository_or_release", "citation_file", "publication", "maintainer_contact", "not_available"]}}},
+    "links": {"type": "object", "additionalProperties": false, "required": ["documentation", "issues"], "properties": {"documentation": {"type": "string", "format": "uri"}, "issues": {"type": "string", "format": "uri"}, "paper_or_archive": {"type": "string", "format": "uri"}}}
+  }
+}
