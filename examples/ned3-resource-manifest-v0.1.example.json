@@ -1,0 +1,43 @@
+{
+  "manifest_version": "0.1.0",
+  "resource": {
+    "id": "example-screening-tool",
+    "name": "Example Screening Tool",
+    "kind": "software",
+    "visibility": "public"
+  },
+  "canonical_repository": {
+    "url": "https://github.com/example-org/example-screening-tool",
+    "default_branch": "main",
+    "reference": "0123456789abcdef0123456789abcdef01234567",
+    "accessed_on": "2026-10-12"
+  },
+  "lifecycle": {
+    "status": "active_research",
+    "maintainer_review": "pending"
+  },
+  "intended_use": {
+    "users": ["researchers and engineers evaluating documented scenarios"],
+    "supported_tasks": ["run a documented screening analysis"],
+    "not_intended_for": ["facility-specific operational decisions without case-specific inputs and review"]
+  },
+  "interfaces": {
+    "required_inputs": ["documented scenario inputs and assumptions"],
+    "outputs": ["screening results with declared assumptions"],
+    "execution": "documented_local"
+  },
+  "evidence": {
+    "ceiling": "screening",
+    "validation_status": "requires_case_specific_evaluation",
+    "limitations": ["The manifest does not validate input quality, model applicability, or a result."]
+  },
+  "reuse": {
+    "software_license": "verify_before_reuse",
+    "data_rights": "not_included",
+    "citation": "repository_or_release"
+  },
+  "links": {
+    "documentation": "https://github.com/example-org/example-screening-tool#readme",
+    "issues": "https://github.com/example-org/example-screening-tool/issues"
+  }
+}
