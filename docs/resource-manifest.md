@@ -50,6 +50,10 @@ repository-specific evidence. Validation checks structure only. A maintainer
 review and a runnable reproduction check remain separate portfolio-audit
 steps.
 
+Use the [resource-manifest review gate](resource-manifest-review.md) before
+changing a public manifest from `pending` to `reviewed` or adding it to a
+public Commons registry.
+
 ## Portfolio adoption sequence
 
 1. Inventory accessible repositories privately, including visibility and
